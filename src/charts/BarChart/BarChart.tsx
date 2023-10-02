@@ -1,38 +1,29 @@
 import { motion } from 'framer-motion';
-import '../tailwind.min.css';
-import { mahoganyPallete } from '../brand/colors';
+import '../../tailwind.min.css';
 import React, { FC } from 'react';
-
-interface BarChartProps {
-	data?: number[];
-	color?: string;
-	width?: number | string;
-	height?: number | string;
-}
+import { BarChartProps } from './barChartTypes';
+import { defaults } from './defaults';
 
 const BarChart: FC<BarChartProps> = ({
-	data = [5, 10, 20, 30, 40, 50, 60, 70, 80, 100],
-	color = mahoganyPallete[0],
-	width = 250, // Default width
-	height = 250, // Default height
+	data = defaults.data,
+	color = defaults.color,
+	width = defaults.width, // Default width
+	height = defaults.height, // Default height
 }) => {
 	/** padding between bars */
-	const paddingBetweenBars = 18;
+	const paddingBetweenBars = 12;
 
 	/** convert the width to viewbox semantics */
 	const viewBoxWidth = typeof width === 'string' ? 100 : width;
 	const viewBoxHeight = typeof height === 'string' ? 100 : height;
 
-	const maxValue = Math.max(...data);
+	const maxValue = Math.max(...data.map((item) => item.value));
 	const barWidth = (viewBoxWidth - paddingBetweenBars * (data.length - 1)) / data.length; // Calculate dynamic bar width considering padding
 
 	return (
 		<svg width={width} height={height} viewBox={`0 0 ${viewBoxWidth} ${viewBoxHeight}`}>
 			{data.map((value, index) => {
-				const scaledHeight = (value / maxValue) * viewBoxHeight; // Scale height
-
-				let fillColor = mahoganyPallete[(index + 1) % mahoganyPallete.length];
-				console.log(fillColor);
+				const scaledHeight = (value.value / maxValue) * viewBoxHeight; // Scale height
 
 				return (
 					<motion.rect
@@ -41,12 +32,12 @@ const BarChart: FC<BarChartProps> = ({
 						y={viewBoxHeight - scaledHeight}
 						width={barWidth}
 						height={scaledHeight}
-						fill={fillColor}
+						fill={color}
 						rx={5}
 						ry={5}
-						initial={{ y: scaledHeight, opacity: 1 }}
+						initial={{ y: scaledHeight, opacity: 0 }}
 						animate={{ y: 0, opacity: 1 }}
-						transition={{ duration: 10, type: 'spring', delay: index * 0.05 }}
+						transition={{ duration: 0.5, type: 'tween', delay: index * 0.05 }}
 					/>
 				);
 			})}
