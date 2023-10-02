@@ -6,3 +6,5 @@ example/node_modules/
 example/package-lock.json
 example/.DS_Store
 ```
+
+dist
