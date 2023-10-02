@@ -5,12 +5,10 @@
 	"main": "dist/index.js",
 	"types": "dist/index.d.ts",
 	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1",
-		"build": "npx tailwindcss build src/tailwind-source.css -o src/tailwind.min.css && tsc && cp src/tailwind.min.css dist/",
-		"watch": "concurrently \"npm:watch:tsc\" \"npm:watch:tailwind\" \"npm:watch:copy\"",
-		"watch:tsc": "tsc --watch",
-		"watch:tailwind": "npx tailwindcss build src/tailwind-source.css -o src/tailwind.min.css --watch",
-		"watch:copy": "chokidar 'src/tailwind.min.css' -c 'node lib-utils/copy-tailwind.js'"
+		"clean": "rimraf dist",
+		"build:css": "npx tailwindcss build src/tailwind-source.css -o src/tailwind.min.css",
+		"copy:css": "cp src/tailwind.min.css dist/tailwind.min.css",
+		"build": "npm run clean && npm run build:css && tsc && npm run copy:css"
 	},
 	"keywords": [],
 	"author": "",
