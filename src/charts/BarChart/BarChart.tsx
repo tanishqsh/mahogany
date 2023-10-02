@@ -3,28 +3,32 @@ import '../../tailwind.min.css';
 import React, { FC } from 'react';
 import { BarChartProps } from './barChartTypes';
 import { defaults } from './defaults';
-import { darkenColor } from '../../lib-utils/fx';
+import { lightenColor } from '../../lib-utils/fx';
 
 const BarChart: FC<BarChartProps> = ({
 	data = defaults.data,
 	color = defaults.color,
 	width = defaults.width, // Default width
 	height = defaults.height, // Default height
+	barGap = defaults.barGap,
 }) => {
-	/** padding between bars */
-	const paddingBetweenBars = 12;
-
 	/** convert the width to viewbox semantics */
 	const viewBoxWidth = typeof width === 'string' ? 100 : width;
 	const viewBoxHeight = typeof height === 'string' ? 100 : height;
 
+	/** gap between bars in the chart */
+	const gapBetweenBars = ((barGap / 100) * viewBoxWidth) / data.length;
+
+	/** gap between chart data and the axis */
 	const axisOffset = 12;
 
 	const maxValue = Math.max(...data.map((item) => item.value));
-	const barWidth = (viewBoxWidth - axisOffset - paddingBetweenBars * (data.length - 1)) / data.length; // Recalculate bar width considering padding and axis offset
+
+	/** dynamic bar width */
+	const barWidth = (viewBoxWidth - axisOffset - gapBetweenBars * (data.length - 1)) / data.length;
 
 	/** Calculates the stroke color */
-	const axisStrokeColor = darkenColor(color, 35);
+	const axisStrokeColor = lightenColor(color, 25);
 
 	return (
 		<svg width={width} height={height} viewBox={`0 0 ${viewBoxWidth} ${viewBoxHeight}`}>
@@ -38,7 +42,7 @@ const BarChart: FC<BarChartProps> = ({
 				y2={viewBoxHeight}
 				stroke={axisStrokeColor}
 				strokeWidth="4"
-				strokeDasharray="1,3"
+				strokeDasharray="20,3"
 			/>
 
 			{/** Y Axis*/}
@@ -51,7 +55,7 @@ const BarChart: FC<BarChartProps> = ({
 				x2={0}
 				stroke={axisStrokeColor}
 				strokeWidth="4"
-				strokeDasharray="1,3"
+				strokeDasharray="20,3"
 			/>
 
 			{data.map((value, index) => {
@@ -60,14 +64,16 @@ const BarChart: FC<BarChartProps> = ({
 				return (
 					<motion.rect
 						key={index}
-						x={axisOffset + index * (barWidth + paddingBetweenBars)}
+						x={axisOffset + index * (barWidth + gapBetweenBars)}
 						y={viewBoxHeight - scaledHeight - axisOffset}
 						width={barWidth}
 						height={scaledHeight}
 						fill={color}
-						radius={5}
 						initial={{ y: scaledHeight, opacity: 0 }}
-						animate={{ y: 0, opacity: 1 }}
+						animate={{
+							y: 0,
+							opacity: 1,
+						}}
 						transition={{ duration: 0.5, type: 'tween', delay: index * 0.05 }}
 					/>
 				);

@@ -46,4 +46,5 @@ export const defaults = {
 	color: mahoganyPallete[Math.floor(Math.random() * mahoganyPallete.length)],
 	width: 250, // Default width
 	height: 250, // Default height
+	barGap: 10, // Default gap between bars
 };

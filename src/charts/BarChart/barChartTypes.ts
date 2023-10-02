@@ -3,6 +3,7 @@ export interface BarChartProps {
 	color?: string;
 	width?: number | string;
 	height?: number | string;
+	barGap?: number;
 }
 
 // data is an array of objects
