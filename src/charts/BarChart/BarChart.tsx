@@ -11,6 +11,7 @@ const BarChart: FC<BarChartProps> = ({
 	width = defaults.width, // Default width
 	height = defaults.height, // Default height
 	barGap = defaults.barGap,
+	showAxis = defaults.showAxis,
 }) => {
 	/** convert the width to viewbox semantics */
 	const viewBoxWidth = typeof width === 'string' ? 100 : width;
@@ -33,30 +34,34 @@ const BarChart: FC<BarChartProps> = ({
 	return (
 		<svg width={width} height={height} viewBox={`0 0 ${viewBoxWidth} ${viewBoxHeight}`}>
 			{/** X Axis*/}
-			<motion.line
-				initial={{ x2: 0, opacity: 0 }}
-				animate={{ x2: viewBoxWidth, opacity: 1 }}
-				transition={{ duration: 0.5, delay: data.length * 0.05 + 0.5 }}
-				x1={0}
-				y1={viewBoxHeight}
-				y2={viewBoxHeight}
-				stroke={axisStrokeColor}
-				strokeWidth="4"
-				strokeDasharray="20,3"
-			/>
+			{showAxis && (
+				<motion.line
+					initial={{ x2: 0, opacity: 0 }}
+					animate={{ x2: viewBoxWidth, opacity: 1 }}
+					transition={{ duration: 0.5, delay: data.length * 0.05 + 0.5 }}
+					x1={0}
+					y1={viewBoxHeight}
+					y2={viewBoxHeight}
+					stroke={axisStrokeColor}
+					strokeWidth="4"
+					strokeDasharray="20,3"
+				/>
+			)}
 
 			{/** Y Axis*/}
-			<motion.line
-				initial={{ y2: viewBoxHeight, opacity: 0 }}
-				animate={{ y2: 0, opacity: 1 }}
-				transition={{ duration: 0.5, delay: data.length * 0.05 + 0.5 }}
-				x1={0}
-				y1={viewBoxHeight}
-				x2={0}
-				stroke={axisStrokeColor}
-				strokeWidth="4"
-				strokeDasharray="20,3"
-			/>
+			{showAxis && (
+				<motion.line
+					initial={{ y2: viewBoxHeight, opacity: 0 }}
+					animate={{ y2: 0, opacity: 1 }}
+					transition={{ duration: 0.5, delay: data.length * 0.05 + 0.5 }}
+					x1={0}
+					y1={viewBoxHeight}
+					x2={0}
+					stroke={axisStrokeColor}
+					strokeWidth="4"
+					strokeDasharray="20,3"
+				/>
+			)}
 
 			{data.map((value, index) => {
 				const scaledHeight = (value.value / maxValue) * viewBoxHeight; // Scale height

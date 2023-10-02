@@ -47,4 +47,5 @@ export const defaults = {
 	width: 250, // Default width
 	height: 250, // Default height
 	barGap: 10, // Default gap between bars
+	showAxis: true, // Default show axis
 };
