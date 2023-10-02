@@ -5,7 +5,7 @@ import { defaults } from './defaults';
 import { lightenColor } from '../../lib-utils/fx';
 import { Axes } from './Axes';
 import Bars from './Bar';
-import { useChartDimensions } from './hooks/useChartDimensions';
+import { useBarChartDimensions } from './hooks/useBarChartDimensions';
 
 const BarChart: FC<BarChartProps> = ({
 	data = defaults.data,
@@ -15,7 +15,7 @@ const BarChart: FC<BarChartProps> = ({
 	barGap = defaults.barGap,
 	showAxis = defaults.showAxis,
 }) => {
-	const { viewBoxWidth, viewBoxHeight, gapBetweenBars, axisOffset, maxValue, barWidth } = useChartDimensions(data, width, height, barGap);
+	const { viewBoxWidth, viewBoxHeight, gapBetweenBars, axisOffset, maxValue, barWidth } = useBarChartDimensions(data, width, height, barGap);
 	const axisStrokeColor = lightenColor(color, 25);
 
 	return (

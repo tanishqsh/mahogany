@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { DataItem } from '../barChartTypes';
 
-export const useChartDimensions = (data: DataItem[], width: number | string, height: number | string, barGap: number) => {
+export const useBarChartDimensions = (data: DataItem[], width: number | string, height: number | string, barGap: number) => {
 	const dimensions = useMemo(() => {
 		const viewBoxWidth = typeof width === 'string' ? 100 : width;
 		const viewBoxHeight = typeof height === 'string' ? 100 : height;
