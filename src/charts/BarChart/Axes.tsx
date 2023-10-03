@@ -5,34 +5,51 @@ interface AxesProps {
 	width: number;
 	height: number;
 	strokeColor: string;
-	dataLength: number;
+	globalChartPadding: number;
 }
 
-export const Axes: React.FC<AxesProps> = ({ width, height, strokeColor, dataLength }) => {
+export const Axes: React.FC<AxesProps> = ({ width, height, strokeColor, globalChartPadding }) => {
+	let xAxis = {
+		x1: 0 + globalChartPadding,
+		y1: height - globalChartPadding,
+		y2: height - globalChartPadding,
+		x2: width - globalChartPadding,
+	};
+
+	let yAxis = {
+		x1: 0 + globalChartPadding,
+		y1: height - globalChartPadding,
+		y2: 0 + globalChartPadding,
+		x2: 0 + globalChartPadding,
+	};
+
 	return (
 		<>
 			<motion.line
-				initial={{ x2: 0, opacity: 0 }}
-				animate={{ x2: width, opacity: 1 }}
-				transition={{ duration: 0.5, delay: dataLength * 0.05 + 0.5 }}
-				x1={0}
-				y1={height}
-				y2={height}
-				x2={width}
+				// X axis
+				initial={{ x2: xAxis.x1, opacity: 0 }}
+				animate={{ x2: xAxis.x2, opacity: 1 }}
+				transition={{ duration: 0.5 }}
+				x1={xAxis.x1} // essentially the starting point
+				y1={xAxis.y1}
+				y2={xAxis.y2}
+				x2={xAxis.x2}
 				stroke={strokeColor}
-				strokeWidth="4"
-				strokeDasharray="20,3"
+				strokeWidth="2"
+				strokeDasharray="10,3"
 			/>
 			<motion.line
-				initial={{ y2: height, opacity: 0 }}
-				animate={{ y2: 0, opacity: 1 }}
-				transition={{ duration: 0.5, delay: dataLength * 0.05 + 0.5 }}
-				x1={0}
-				y1={height}
-				x2={0}
+				// Y axis
+				initial={{ y2: yAxis.y1, opacity: 0 }}
+				animate={{ y2: yAxis.y2, opacity: 1 }}
+				transition={{ duration: 0.5 }}
+				x1={yAxis.x1}
+				y1={yAxis.y1}
+				x2={yAxis.x2}
+				y2={yAxis.y2}
 				stroke={strokeColor}
-				strokeWidth="4"
-				strokeDasharray="20,3"
+				strokeWidth="2"
+				strokeDasharray="10,3"
 			/>
 		</>
 	);

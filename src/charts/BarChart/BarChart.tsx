@@ -15,13 +15,19 @@ const BarChart: FC<BarChartProps> = ({
 	barGap = defaults.barGap,
 	showAxis = defaults.showAxis,
 }) => {
-	const { viewBoxWidth, viewBoxHeight, gapBetweenBars, axisOffset, maxValue, barWidth } = useBarChartDimensions(data, width, height, barGap);
-	const axisStrokeColor = lightenColor(color, 25);
+	const { viewBoxWidth, viewBoxHeight, gapBetweenBars, axisOffset, maxValue, barWidth, globalChartPadding } = useBarChartDimensions(
+		data,
+		width,
+		height,
+		barGap
+	);
+	const axisStrokeColor = lightenColor(color, 10);
 
 	return (
 		<svg width={width} height={height} viewBox={`0 0 ${viewBoxWidth} ${viewBoxHeight}`}>
-			{showAxis && <Axes width={viewBoxWidth} height={viewBoxHeight} strokeColor={axisStrokeColor} dataLength={data?.length} />}
+			{showAxis && <Axes width={viewBoxWidth} height={viewBoxHeight} strokeColor={axisStrokeColor} globalChartPadding={globalChartPadding} />}
 			<Bars
+				globalChartPadding={globalChartPadding}
 				data={data}
 				maxValue={maxValue}
 				viewBoxHeight={viewBoxHeight}
