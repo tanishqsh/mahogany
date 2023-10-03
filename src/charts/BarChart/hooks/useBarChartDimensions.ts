@@ -9,11 +9,11 @@ export const useBarChartDimensions = (data: DataItem[], width: number | string, 
 		const viewBoxWidth = typeof width === 'string' ? (isNaN(parseInt(width)) ? 500 : parseInt(width)) : width;
 		const viewBoxHeight = typeof height === 'string' ? (isNaN(parseInt(height)) ? 500 : parseInt(height)) : height;
 
-		const gapBetweenBars = 12;
-		const axisOffset = gapBetweenBars;
+		const gapBetweenBars = barGap;
+		const axisOffset = 10;
 
 		const maxValue = Math.max(...data.map((item: DataItem) => item.value));
-		const barWidth = (viewBoxWidth - axisOffset - globalChartPadding - gapBetweenBars * data.length) / data.length;
+		const barWidth = (viewBoxWidth - axisOffset - 2 * globalChartPadding - gapBetweenBars * (data.length - 1)) / data.length;
 
 		return {
 			viewBoxWidth,

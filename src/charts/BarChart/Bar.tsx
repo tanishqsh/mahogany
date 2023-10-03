@@ -26,7 +26,7 @@ const Bars: FC<BarsProps> = ({ data, maxValue, viewBoxHeight, barWidth, gapBetwe
 
 				return (
 					<motion.rect
-						whileHover={{ y: -10, opacity: 0.7, transition: { duration: 0.2, delay: 0 } }}
+						whileHover={{ y: -10, opacity: 0.7, transition: { duration: 0.2 } }}
 						x={x}
 						y={y}
 						width={barWidth}
@@ -34,11 +34,11 @@ const Bars: FC<BarsProps> = ({ data, maxValue, viewBoxHeight, barWidth, gapBetwe
 						ry={12}
 						height={scaledHeight}
 						fill={color}
-						initial={{ y: scaledHeight, opacity: 0 }}
+						initial={{ y: viewBoxHeight, opacity: 1 }}
 						animate={{
 							y: 0,
 							opacity: 1,
-							transition: { duration: 0.5, type: 'tween', delay: 0.5 + index * 0.05 },
+							transition: { duration: 0.5, type: 'tween', delay: index * 0.05 },
 						}}
 					/>
 				);
