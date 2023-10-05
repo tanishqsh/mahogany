@@ -2,10 +2,11 @@ import '../../tailwind.min.css';
 import React, { FC } from 'react';
 import { BarChartProps } from './types/barChartTypes';
 import { defaults } from './defaults';
-import { lightenColor } from '../../lib-utils/fx';
+import { darkenColor, lightenColor } from '../../lib-utils/fx';
 import { Axes } from './elements/Axes';
 import Bars from './elements/Bar';
 import { useBarChartDimensions } from './hooks/useBarChartDimensions';
+import { motion } from 'framer-motion';
 
 const BarChart: FC<BarChartProps> = ({
 	data = defaults.data,
@@ -26,6 +27,49 @@ const BarChart: FC<BarChartProps> = ({
 	return (
 		<svg width={width} height={height} viewBox={`0 0 ${viewBoxWidth} ${viewBoxHeight}`}>
 			{showAxis && <Axes width={viewBoxWidth} height={viewBoxHeight} strokeColor={axisStrokeColor} globalChartPadding={globalChartPadding} />}
+			<motion.line
+				// Dotted line at 25% height of the graph
+				initial={{ x1: globalChartPadding, x2: globalChartPadding, opacity: 0 }}
+				animate={{ x1: globalChartPadding, x2: viewBoxWidth - globalChartPadding, opacity: 1 }}
+				transition={{ duration: 0.5 }}
+				x1={0 + globalChartPadding} // starting point
+				y1={viewBoxHeight / 4}
+				y2={viewBoxHeight / 4}
+				x2={viewBoxWidth - globalChartPadding} // ending point
+				stroke={'#383838'}
+				strokeWidth="1"
+				strokeDasharray="10,5"
+			/>
+
+			{/** Experimenting here, will later move to its own component */}
+			<motion.line
+				// Dotted line at 50% height of the graph
+				initial={{ x1: globalChartPadding, x2: globalChartPadding, opacity: 0 }}
+				animate={{ x1: globalChartPadding, x2: viewBoxWidth - globalChartPadding, opacity: 1 }}
+				transition={{ duration: 0.5 }}
+				x1={0 + globalChartPadding} // starting point
+				y1={viewBoxHeight / 2}
+				y2={viewBoxHeight / 2}
+				x2={viewBoxWidth - globalChartPadding} // ending point
+				stroke={'#383838'}
+				strokeWidth="1"
+				strokeDasharray="10,5"
+			/>
+			<motion.line
+				// Dotted line at 75% height of the graph
+				initial={{ x1: globalChartPadding, x2: globalChartPadding, opacity: 0 }}
+				animate={{ x1: globalChartPadding, x2: viewBoxWidth - globalChartPadding, opacity: 1 }}
+				transition={{ duration: 0.5 }}
+				x1={0 + globalChartPadding} // starting point
+				y1={(viewBoxHeight / 4) * 3}
+				y2={(viewBoxHeight / 4) * 3}
+				x2={viewBoxWidth - globalChartPadding} // ending point
+				stroke={'#383838'}
+				strokeWidth="1"
+				strokeDasharray="10,5"
+			/>
+			{/** Experimenting here, will later move to its own component */}
+
 			<Bars
 				globalChartPadding={globalChartPadding}
 				data={data}

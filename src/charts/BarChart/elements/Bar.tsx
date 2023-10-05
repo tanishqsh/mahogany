@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
-import { motion } from 'framer-motion';
-import { DataItem } from '../types/barChartTypes';
+import { color, motion } from 'framer-motion';
+import { DashPattern, DataItem } from '../types/barChartTypes';
+import { darkenColor, lightenColor } from '../../../lib-utils/fx';
 interface BarsProps {
 	data: DataItem[];
 	maxValue: number;
@@ -19,19 +20,19 @@ const barVariants = {
 		transition: {
 			duration: 0.3,
 			type: 'tween',
-			delay: custom.shouldDelay ? 0.5 + custom.index * 0.08 : 0,
 		},
 	}),
 	animate: (custom: { viewBoxHeight: any; shouldDelay: any; index: number }) => ({
 		y: 0,
 		opacity: 1,
-		transition: { duration: 0.3, type: 'tween' },
+		transition: { duration: 0.3, type: 'tween', delay: custom.shouldDelay ? 0.5 + custom.index * 0.08 : 0 },
 	}),
-	hover: {
-		y: -2,
-		opacity: 0.9,
-		transition: { duration: 0.2, delay: 0 },
-	},
+	hover: (custom: { color: string }) => ({
+		y: 0,
+		opacity: 1,
+		transition: { duration: 0.3, delay: 0 },
+		fill: lightenColor(custom.color, 10),
+	}),
 };
 
 const Bars: FC<BarsProps> = ({ data, maxValue, viewBoxHeight, barWidth, gapBetweenBars, axisOffset, color, globalChartPadding }) => {
@@ -60,8 +61,11 @@ const Bars: FC<BarsProps> = ({ data, maxValue, viewBoxHeight, barWidth, gapBetwe
 						<motion.rect
 							variants={barVariants}
 							whileHover={'hover'}
-							onHoverStart={() => {
+							onMouseEnter={() => {
 								setIsBarHovered({ isHovered: true, index });
+							}}
+							onMouseLeave={() => {
+								setIsBarHovered({ isHovered: false, index: -1 });
 							}}
 							initial={'initial'}
 							animate={'animate'}
@@ -72,14 +76,13 @@ const Bars: FC<BarsProps> = ({ data, maxValue, viewBoxHeight, barWidth, gapBetwe
 							ry={12}
 							height={scaledHeight}
 							fill={color}
-							custom={{ viewBoxHeight, shouldDelay: true, index }}
+							custom={{ color, viewBoxHeight, shouldDelay: true, index }}
 						/>
 						<motion.text
 							transition={{ duration: 0.3 }}
 							fontSize={dynamicFontSize} // use dynamic font size
 							initial={{ rotate: 0, opacity: 0, x: textX, y: textY + scaledHeight / 2 }} // Adjust y position to be half inside the bar
 							animate={{
-								rotate: 90,
 								opacity: isBarHovered.isHovered && isBarHovered.index === index ? 1 : 0,
 								x: textX,
 								y: textY + scaledHeight / 2, // Adjust y position to be half inside the bar
@@ -88,12 +91,94 @@ const Bars: FC<BarsProps> = ({ data, maxValue, viewBoxHeight, barWidth, gapBetwe
 							className="tracking-wider pointer-events-none"
 							textAnchor="middle"
 							alignmentBaseline="middle"
-							fill="#fff"
+							fill={lightenColor(color, 50)}
 						>
-							{value.label.length * dynamicFontSize <= scaledHeight
-								? value.label
-								: value.label.substring(0, Math.floor(scaledHeight / dynamicFontSize)) + '...'}
+							{value.value}
 						</motion.text>
+						{index === isBarHovered.index && (
+							<motion.text
+								key={index}
+								initial={{ opacity: 0, y: viewBoxHeight - globalChartPadding + 36, x: 0 + globalChartPadding }}
+								animate={{
+									opacity: 1,
+									y: viewBoxHeight - globalChartPadding + 24,
+									x: 0 + globalChartPadding,
+									transition: { duration: 0.2 },
+								}}
+								fill="#fff"
+								className={'px-2 py-1 text-xs'}
+								style={{ background: 'rgba(0, 0, 0, 0.5)' }} // Add background color
+							>
+								{value.label}: {value.value}
+							</motion.text>
+						)}
+						<motion.text
+							key={'maxValue'}
+							initial={{ opacity: 0, y: 0 + globalChartPadding, x: 0 + globalChartPadding }} // Adjust y position to be half inside the bar
+							animate={{
+								opacity: 0.3,
+								y: globalChartPadding - 12,
+								x: 0 + globalChartPadding,
+								transition: { duration: 0.2 },
+							}}
+							textAnchor="middle"
+							alignmentBaseline="middle"
+							fill={lightenColor(color, 10)}
+							className={'text-xs'}
+						>
+							{maxValue}
+						</motion.text>
+						{index === isBarHovered.index && (
+							<motion.text
+								key={'originPoint'}
+								initial={{ opacity: 0, y: viewBoxHeight - globalChartPadding, x: globalChartPadding }} // Adjust y position to be half inside the bar
+								animate={{
+									opacity: 0.3,
+									y: viewBoxHeight - globalChartPadding,
+									x: globalChartPadding - 16,
+									transition: { duration: 0.2 },
+								}}
+								textAnchor="middle"
+								alignmentBaseline="middle"
+								fill={lightenColor(color, 10)}
+								className={'text-xs'}
+							>
+								0
+							</motion.text>
+						)}
+						{index === isBarHovered.index && (
+							<motion.line
+								// X axis
+								initial={{ x2: globalChartPadding, opacity: 0 }}
+								animate={{ x2: x, opacity: 1 }}
+								transition={{ duration: 0.5 }}
+								x1={globalChartPadding} // essentially the starting point
+								y1={y + 0.5}
+								x2={x}
+								y2={y + 0.5}
+								stroke={darkenColor(color, 10)}
+								strokeWidth="1.5"
+								strokeDasharray={'3,3'}
+							/>
+						)}
+						{index === isBarHovered.index && (
+							<motion.text
+								key={value.label + ' value'}
+								initial={{ opacity: 0, y: y, x: globalChartPadding }}
+								animate={{
+									opacity: 0.3,
+									y: y,
+									x: globalChartPadding - axisOffset - 8,
+									transition: { duration: 0.2 },
+								}}
+								textAnchor="middle"
+								alignmentBaseline="middle"
+								fill={lightenColor(color, 10)}
+								className={'text-xs'}
+							>
+								{value.value}
+							</motion.text>
+						)}
 					</motion.g>
 				);
 			})}
