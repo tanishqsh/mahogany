@@ -1,10 +1,10 @@
 import '../../tailwind.min.css';
 import React, { FC } from 'react';
-import { BarChartProps } from './barChartTypes';
+import { BarChartProps } from './types/barChartTypes';
 import { defaults } from './defaults';
 import { lightenColor } from '../../lib-utils/fx';
-import { Axes } from './Axes';
-import Bars from './Bar';
+import { Axes } from './elements/Axes';
+import Bars from './elements/Bar';
 import { useBarChartDimensions } from './hooks/useBarChartDimensions';
 
 const BarChart: FC<BarChartProps> = ({

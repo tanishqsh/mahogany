@@ -1,12 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-
-interface AxesProps {
-	width: number;
-	height: number;
-	strokeColor: string;
-	globalChartPadding: number;
-}
+import { AxesProps, DashPattern } from '../types/barChartTypes';
 
 export const Axes: React.FC<AxesProps> = ({ width, height, strokeColor, globalChartPadding }) => {
 	let xAxis = {
@@ -36,7 +30,7 @@ export const Axes: React.FC<AxesProps> = ({ width, height, strokeColor, globalCh
 				x2={xAxis.x2}
 				stroke={strokeColor}
 				strokeWidth="2"
-				strokeDasharray="10,3"
+				strokeDasharray={DashPattern.SmallDashes}
 			/>
 			<motion.line
 				// Y axis
@@ -49,7 +43,7 @@ export const Axes: React.FC<AxesProps> = ({ width, height, strokeColor, globalCh
 				y2={yAxis.y2}
 				stroke={strokeColor}
 				strokeWidth="2"
-				strokeDasharray="10,3"
+				strokeDasharray={DashPattern.SmallDashes}
 			/>
 		</>
 	);

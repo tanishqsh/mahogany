@@ -1,10 +1,10 @@
 import { useMemo } from 'react';
-import { DataItem } from '../barChartTypes';
+import { DataItem } from '../types/barChartTypes';
 
 export const useBarChartDimensions = (data: DataItem[], width: number | string, height: number | string, barGap: number) => {
 	const dimensions = useMemo(() => {
 		/** This is the padding we want on all 4 sides of the viewbox. */
-		let globalChartPadding: number = 10;
+		let globalChartPadding: number = 64;
 
 		const viewBoxWidth = typeof width === 'string' ? (isNaN(parseInt(width)) ? 500 : parseInt(width)) : width;
 		const viewBoxHeight = typeof height === 'string' ? (isNaN(parseInt(height)) ? 500 : parseInt(height)) : height;
