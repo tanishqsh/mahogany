@@ -2,7 +2,7 @@ import '../../tailwind.min.css';
 import React, { FC } from 'react';
 import { BarChartProps } from './types/barChartTypes';
 import { defaults } from './defaults';
-import { darkenColor, lightenColor } from '../../lib-utils/fx';
+import { lightenColor } from '../../lib-utils/fx';
 import { Axes } from './elements/Axes';
 import Bars from './elements/Bar';
 import { useBarChartDimensions } from './hooks/useBarChartDimensions';
@@ -36,7 +36,7 @@ const BarChart: FC<BarChartProps> = ({
 				y1={viewBoxHeight / 4}
 				y2={viewBoxHeight / 4}
 				x2={viewBoxWidth - globalChartPadding} // ending point
-				stroke={'#383838'}
+				stroke={lightenColor(color, 10) || '#ededed'}
 				strokeWidth="1"
 				strokeDasharray="2,2"
 			/>
@@ -51,7 +51,7 @@ const BarChart: FC<BarChartProps> = ({
 				y1={(viewBoxHeight / 4) * 2}
 				y2={(viewBoxHeight / 4) * 2}
 				x2={viewBoxWidth - globalChartPadding} // ending point
-				stroke={'#383838'}
+				stroke={lightenColor(color, 10) || '#ededed'}
 				strokeWidth="1"
 				strokeDasharray="2,2"
 			/>
@@ -64,7 +64,7 @@ const BarChart: FC<BarChartProps> = ({
 				y1={(viewBoxHeight / 4) * 3}
 				y2={(viewBoxHeight / 4) * 3}
 				x2={viewBoxWidth - globalChartPadding} // ending point
-				stroke={'#383838'}
+				stroke={lightenColor(color, 10) || '#ededed'}
 				strokeWidth="1"
 				strokeDasharray="2,2"
 			/>
