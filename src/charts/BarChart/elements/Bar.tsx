@@ -134,14 +134,14 @@ const Bars: FC<BarsProps> = ({ data, maxValue, viewBoxHeight, barWidth, gapBetwe
 								key={'originPoint'}
 								initial={{ opacity: 0, y: viewBoxHeight - globalChartPadding, x: globalChartPadding }} // Adjust y position to be half inside the bar
 								animate={{
-									opacity: 0.3,
+									opacity: 1,
 									y: viewBoxHeight - globalChartPadding,
 									x: globalChartPadding - 16,
 									transition: { duration: 0.2 },
 								}}
 								textAnchor="middle"
 								alignmentBaseline="middle"
-								fill={lightenColor(color, 10)}
+								fill={darkenColor(color, 10)}
 								className={'text-xs'}
 							>
 								0
@@ -167,14 +167,14 @@ const Bars: FC<BarsProps> = ({ data, maxValue, viewBoxHeight, barWidth, gapBetwe
 								key={value.label + ' value'}
 								initial={{ opacity: 0, y: y, x: globalChartPadding }}
 								animate={{
-									opacity: 0.3,
+									opacity: 1,
 									y: y,
-									x: globalChartPadding - axisOffset - 8,
+									x: globalChartPadding - axisOffset - 16,
 									transition: { duration: 0.2 },
 								}}
 								textAnchor="middle"
 								alignmentBaseline="middle"
-								fill={lightenColor(color, 10)}
+								fill={darkenColor(color, 10)}
 								className={'text-xs'}
 							>
 								{value.value}
