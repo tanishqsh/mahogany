@@ -57,7 +57,7 @@ const Bars: FC<BarsProps> = ({ data, maxValue, viewBoxHeight, barWidth, gapBetwe
 				const dynamicFontSize = barWidth / 4; // dynamic font size based on barWidth
 
 				return (
-					<motion.g className={'group'}>
+					<motion.g key={index} className={'group'}>
 						<motion.rect
 							variants={barVariants}
 							whileHover={'hover'}
@@ -105,13 +105,14 @@ const Bars: FC<BarsProps> = ({ data, maxValue, viewBoxHeight, barWidth, gapBetwe
 									x: 0 + globalChartPadding,
 									transition: { duration: 0.2 },
 								}}
-								fill="#fff"
-								className={'px-2 py-1 text-xs'}
+								fill={darkenColor(color, 10)}
+								className={'px-2 py-1 text-xs font-bold'} // Add font-bold to make the text bold
 								style={{ background: 'rgba(0, 0, 0, 0.5)' }} // Add background color
 							>
 								{value.label}: {value.value}
 							</motion.text>
 						)}
+
 						<motion.text
 							key={'maxValue'}
 							initial={{ opacity: 0, y: 0 + globalChartPadding, x: 0 + globalChartPadding }} // Adjust y position to be half inside the bar
@@ -148,10 +149,10 @@ const Bars: FC<BarsProps> = ({ data, maxValue, viewBoxHeight, barWidth, gapBetwe
 						)}
 						{index === isBarHovered.index && (
 							<motion.line
-								// X axis
+								// The line that connects the bar to the x axis
 								initial={{ x2: globalChartPadding, opacity: 0 }}
 								animate={{ x2: x, opacity: 1 }}
-								transition={{ duration: 0.5 }}
+								transition={{ duration: 0.4, type: 'linear' }}
 								x1={globalChartPadding} // essentially the starting point
 								y1={y + 0.5}
 								x2={x}

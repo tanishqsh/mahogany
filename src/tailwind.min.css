@@ -553,6 +553,10 @@ video {
   line-height: 1rem;
 }
 
+.font-bold {
+  font-weight: 700;
+}
+
 .tracking-wider {
   letter-spacing: 0.05em;
 }

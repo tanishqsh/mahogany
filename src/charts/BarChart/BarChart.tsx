@@ -31,14 +31,14 @@ const BarChart: FC<BarChartProps> = ({
 				// Dotted line at 25% height of the graph
 				initial={{ x1: globalChartPadding, x2: globalChartPadding, opacity: 0 }}
 				animate={{ x1: globalChartPadding, x2: viewBoxWidth - globalChartPadding, opacity: 1 }}
-				transition={{ duration: 0.5 }}
+				transition={{ duration: 0.5, delay: 0.2 }}
 				x1={0 + globalChartPadding} // starting point
 				y1={viewBoxHeight / 4}
 				y2={viewBoxHeight / 4}
 				x2={viewBoxWidth - globalChartPadding} // ending point
 				stroke={'#383838'}
 				strokeWidth="1"
-				strokeDasharray="10,5"
+				strokeDasharray="2,2"
 			/>
 
 			{/** Experimenting here, will later move to its own component */}
@@ -46,27 +46,27 @@ const BarChart: FC<BarChartProps> = ({
 				// Dotted line at 50% height of the graph
 				initial={{ x1: globalChartPadding, x2: globalChartPadding, opacity: 0 }}
 				animate={{ x1: globalChartPadding, x2: viewBoxWidth - globalChartPadding, opacity: 1 }}
-				transition={{ duration: 0.5 }}
+				transition={{ duration: 0.5, delay: 0.2 }}
 				x1={0 + globalChartPadding} // starting point
-				y1={viewBoxHeight / 2}
-				y2={viewBoxHeight / 2}
+				y1={(viewBoxHeight / 4) * 2}
+				y2={(viewBoxHeight / 4) * 2}
 				x2={viewBoxWidth - globalChartPadding} // ending point
 				stroke={'#383838'}
 				strokeWidth="1"
-				strokeDasharray="10,5"
+				strokeDasharray="2,2"
 			/>
 			<motion.line
 				// Dotted line at 75% height of the graph
 				initial={{ x1: globalChartPadding, x2: globalChartPadding, opacity: 0 }}
 				animate={{ x1: globalChartPadding, x2: viewBoxWidth - globalChartPadding, opacity: 1 }}
-				transition={{ duration: 0.5 }}
+				transition={{ duration: 0.5, delay: 0.2 }}
 				x1={0 + globalChartPadding} // starting point
 				y1={(viewBoxHeight / 4) * 3}
 				y2={(viewBoxHeight / 4) * 3}
 				x2={viewBoxWidth - globalChartPadding} // ending point
 				stroke={'#383838'}
 				strokeWidth="1"
-				strokeDasharray="10,5"
+				strokeDasharray="2,2"
 			/>
 			{/** Experimenting here, will later move to its own component */}
 
