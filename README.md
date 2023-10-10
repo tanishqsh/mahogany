@@ -1,7 +1,3 @@
----
-title: Getting Started with Mahogany
----
-
 # Getting Started with Mahogany
 
 Mahogany is a powerful, flexible, and easy-to-use charting library for React. It provides a set of reusable chart components that can be composed together to build a wide variety of charts and data visualizations.
