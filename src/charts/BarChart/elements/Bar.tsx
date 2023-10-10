@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
-import { color, motion } from 'framer-motion';
-import { DashPattern, DataItem } from '../types/barChartTypes';
+import { motion } from 'framer-motion';
+import { DataItem } from '../types/barChartTypes';
 import { darkenColor, lightenColor } from '../../../lib-utils/fx';
 interface BarsProps {
 	data: DataItem[];
