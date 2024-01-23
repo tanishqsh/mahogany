@@ -22,6 +22,7 @@ const BarChart: FC<BarChartProps> = ({
 		height,
 		barGap
 	);
+
 	const axisStrokeColor = lightenColor(color, 10);
 
 	return (
@@ -69,7 +70,6 @@ const BarChart: FC<BarChartProps> = ({
 				strokeDasharray="2,2"
 			/>
 			{/** Experimenting here, will later move to its own component */}
-
 			<Bars
 				globalChartPadding={globalChartPadding}
 				data={data}

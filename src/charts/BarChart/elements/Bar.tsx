@@ -141,7 +141,7 @@ const Bars: FC<BarsProps> = ({ data, maxValue, viewBoxHeight, barWidth, gapBetwe
 								}}
 								textAnchor="middle"
 								alignmentBaseline="middle"
-								fill={darkenColor(color, 10)}
+								fill={lightenColor(color, 50)}
 								className={'text-xs'}
 							>
 								0
@@ -157,7 +157,7 @@ const Bars: FC<BarsProps> = ({ data, maxValue, viewBoxHeight, barWidth, gapBetwe
 								y1={y + 0.5}
 								x2={x}
 								y2={y + 0.5}
-								stroke={darkenColor(color, 10)}
+								stroke={lightenColor(color, 50)}
 								strokeWidth="1.5"
 								strokeDasharray={'3,3'}
 							/>
@@ -174,7 +174,7 @@ const Bars: FC<BarsProps> = ({ data, maxValue, viewBoxHeight, barWidth, gapBetwe
 								}}
 								textAnchor="middle"
 								alignmentBaseline="middle"
-								fill={darkenColor(color, 10)}
+								fill={lightenColor(color, 50)}
 								className={'text-xs'}
 							>
 								{value.value}
